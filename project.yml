@@ -1,0 +1,22 @@
+name: LiDARScan
+options:
+  bundleIdPrefix: edu.itu.lidar
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  LiDARScan:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: edu.itu.lidar.LiDARScan
+        SWIFT_VERSION: "5.9"
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_NSCameraUsageDescription: "LiDAR ve fotoğraf ile 3B nokta bulutu yakalamak için kamera gerekir."
+        INFOPLIST_KEY_UIFileSharingEnabled: YES
+        INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UIRequiredDeviceCapabilities: "arkit"

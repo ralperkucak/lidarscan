@@ -8,18 +8,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Xcode surumu
-        run: xcodebuild -version && xcrun --sdk iphoneos --show-sdk-version
+        run: |
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
       - name: XcodeGen kur ve proje uret
-        run: brew install xcodegen && xcodegen
-      - name: Derle (imzasiz, cihaz SDK)
+        run: |
+          brew install xcodegen
+          xcodegen
+      - name: Derle imzasiz
         run: |
           set -o pipefail
-          xcodebuild -project LiDARScan.xcodeproj -scheme LiDARScan \
-            -sdk iphoneos -destination 'generic/platform=iOS' \
-            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build 2>&1 | tee build.log
+          xcodebuild -project LiDARScan.xcodeproj -scheme LiDARScan -sdk iphoneos -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build 2>&1 | tee build.log
       - name: Hatalari ozetle
         if: always()
-        run: grep -E "error:|warning: unre|BUILD (SUCCEEDED|FAILED)" build.log | head -60 || true
+        run: |
+          grep -E 'error:|BUILD SUCCEEDED|BUILD FAILED' build.log | head -60 || true
       - uses: actions/upload-artifact@v4
         if: always()
-        with: { name: build-log, path: build.log }
+        with:
+          name: build-log
+          path: build.log

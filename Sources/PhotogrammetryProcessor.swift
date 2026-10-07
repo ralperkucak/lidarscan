@@ -69,7 +69,7 @@ enum PhotogrammetryProcessor {
                 progress(f, String(format: "Fotogrametri %%%.0f", f * 100))
             case .requestComplete(_, let result):
                 switch result {
-                case .poses(let p): poses = p.posesBySample.mapValues { $0.transform }
+                case .poses(let p): poses = p.posesBySample.mapValues { $0.transform.matrix }
                 case .pointCloud(let pc):
                     cloud.positions.reserveCapacity(pc.points.count)
                     for pt in pc.points {
